@@ -24,7 +24,7 @@
   }
   .wrap{max-width:900px;margin:0 auto;padding:40px 20px 60px}
   .hero{text-align:left;margin-bottom:40px}
-  .date{color:#9a9a9a;font-weight:600;margin-bottom:10px}
+  .date{color:#3b3a3a;font-weight:600;margin-bottom:14px}
   .title{line-height:1.05}
   .title .line1,.title .line2{
     font-size:var(--title-size);
@@ -88,6 +88,8 @@
     </section>
 
     <section class="panel">
+       <img src="https://raw.githubusercontent.com/leesl11330-hub/notice/main/red.png" alt="" 
+       style="width:160px;margin-bottom:20px;">
       <p>보다 나은 서비스를 위해<br>정기적인 최적화 작업이 실시 될 예정입니다.</p>
       <p><span class="strong">국내 최고의 품질</span>로 보답하겠습니다.</p>
 
@@ -105,7 +107,7 @@
 
       <div class="note">
         ※ 점검 종료 시간 이후 접속 가능하시며,<br>
-        예정 시간보다 빠르게 종료 될경우 <strong>텔레그램 공지</strong> 안내 드리겠습니다 ※
+        점검이 예정 시간보다 빠르게 종료 혹은 연장 될 경우 <strong>텔레그램 공지</strong> 안내 드리겠습니다 ※
       </div>
 
       <!-- 🔹 텔레그램 안내 버튼 추가 -->
@@ -120,26 +122,30 @@
   </div>
 
   <script>
-    // 실시간 남은시간 표시
-    function updateRemainingTime(){
-      const now = new Date();
-      const end = new Date();
-      end.setHours(16,0,0,0);
-      const diff = end - now;
-      const target = document.getElementById("remaining");
+  // 🎯 목표 날짜·시간: 2025년 10월 6일 16시 00분
+  const targetDate = new Date(2025, 9, 6, 16, 0, 0); // JS는 월 0부터 시작 (10월 → 9)
 
-      if(diff <= 0){
-        target.textContent = "점검이 종료되었습니다.";
-        target.style.color = "#ff7070";
-        return;
-      }
-      const h = Math.floor(diff/3600000);
-      const m = Math.floor((diff%3600000)/60000);
-      const s = Math.floor((diff%60000)/1000);
-      target.textContent = `남은 시간: ${h}시간 ${m}분 ${s}초`;
+  function updateRemainingTime() {
+    const now = new Date();
+    const diff = targetDate - now;
+    const target = document.getElementById("remaining");
+
+    if (diff <= 0) {
+      target.textContent = "점검이 종료 되었습니다. 새로고침 후 접속 바랍니다.";
+      target.style.color = "#ff7070";
+      return;
     }
-    updateRemainingTime();
-    setInterval(updateRemainingTime,1000);
-  </script>
+
+    const h = Math.floor(diff / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+    target.textContent = `남은 시간: ${h}시간 ${m}분 ${s}초`;
+  }
+
+  updateRemainingTime();
+  setInterval(updateRemainingTime, 1000);
+</script>
+
 </body>
 </html>
