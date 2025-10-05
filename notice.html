@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>레드라인 정기점검 안내</title>
+<style>
+  :root{
+    --brand:#e3002b;
+    --accent:#ffc400;
+    --dark:#262626;
+    --card:#2f2f2f;
+    --title-size:72px;
+    --title-gap:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Pretendard","Noto Sans KR",sans-serif;
+    background:#fff;color:#111;
+  }
+  .bar{
+    height:26px;
+    background:repeating-linear-gradient(135deg,#111 0 18px,var(--accent) 18px 36px);
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:40px 20px 60px}
+  .hero{text-align:left;margin-bottom:40px}
+  .date{color:#9a9a9a;font-weight:600;margin-bottom:10px}
+  .title{line-height:1.05}
+  .title .line1,.title .line2{
+    font-size:var(--title-size);
+    font-weight:900;
+    letter-spacing:-.02em;
+  }
+  .title .line1{color:var(--brand);margin-bottom:var(--title-gap)}
+  .title .line2{color:#111}
+  .panel{
+    background:var(--dark);color:#fff;border-radius:20px;
+    padding:28px 24px 38px;text-align:center;
+    box-shadow:0 10px 22px rgba(0,0,0,0.12);
+  }
+  .panel p{margin:0 0 10px;font-size:18px;line-height:1.6;color:#ececec}
+  .panel .strong{background:var(--accent);color:#111;font-weight:900;padding:0 .35em;border-radius:6px}
+  .time{display:flex;justify-content:center;align-items:center;gap:12px;margin:20px 0 10px}
+  .digit{
+    width:100px;height:100px;background:var(--card);color:#fff;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:50px;font-weight:900;line-height:1;
+    box-shadow:inset 0 -5px 0 rgba(255,255,255,.05),0 8px 14px rgba(0,0,0,0.25);
+  }
+  .sep{
+    height:100px;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:50px;font-weight:900;line-height:1;
+  }
+  .remaining{font-size:22px;margin-top:8px;color:#ffc400;font-weight:700}
+  .note{font-size:14px;color:#d6d6d6;line-height:1.5;margin-top:6px}
+  .note strong{color:#ff8c8c}
+  .telegram-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:12px;
+    text-decoration:none;
+    color:#24A1DE;
+    font-weight:700;
+    font-size:16px;
+    transition:opacity .2s;
+  }
+  .telegram-link:hover{opacity:0.8}
+  .telegram-link svg{
+    width:20px;height:20px;fill:#24A1DE;
+  }
+  @media(max-width:640px){
+    :root{--title-size:48px;--title-gap:6px;}
+    .digit{width:80px;height:80px;font-size:38px}
+    .sep{height:80px;font-size:38px}
+  }
+</style>
+</head>
+<body>
+  <div class="bar"></div>
+  <div class="wrap">
+    <section class="hero">
+      <div class="date">2025년 10월 06일 월요일</div>
+      <div class="title">
+        <div class="line1">레드라인</div>
+        <div class="line2">정기점검안내</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p>보다 나은 서비스를 위해<br>정기적인 최적화 작업이 실시 될 예정입니다.</p>
+      <p><span class="strong">국내 최고의 품질</span>로 보답하겠습니다.</p>
+
+      <div class="time">
+        <div class="digit">14</div>
+        <div class="sep">:</div>
+        <div class="digit">00</div>
+        <div class="sep">~</div>
+        <div class="digit">16</div>
+        <div class="sep">:</div>
+        <div class="digit">00</div>
+      </div>
+
+      <div class="remaining" id="remaining">남은 시간 계산중...</div>
+
+      <div class="note">
+        ※ 점검 종료 시간 이후 접속 가능하시며,<br>
+        예정 시간보다 빠르게 종료 될경우 <strong>텔레그램 공지</strong> 안내 드리겠습니다 ※
+      </div>
+
+      <!-- 🔹 텔레그램 안내 버튼 추가 -->
+      <a href="https://t.me/CSREDLINECS" target="_blank" class="telegram-link">
+        <!-- 텔레그램 아이콘 (SVG) -->
+        <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+          <path d="M120 0C53.7 0 0 53.7 0 120s53.7 120 120 120 120-53.7 120-120S186.3 0 120 0zm55.5 83.2l-19 89.7c-1.4 6.3-5.2 7.8-10.5 4.9l-29-21.4-14 13.4c-1.6 1.6-2.9 3-5.9 3l2.1-29.6 53.8-48.7c2.3-2.1-.5-3.3-3.6-1.2l-66.6 42-28.7-9c-6.2-1.9-6.3-6.2 1.3-9.2l112.2-43.2c5.2-1.9 9.7 1.2 8 9.1z"/>
+        </svg>
+        클릭하여 텔레그램 공지 채널 들어가기
+      </a>
+    </section>
+  </div>
+
+  <script>
+    // 실시간 남은시간 표시
+    function updateRemainingTime(){
+      const now = new Date();
+      const end = new Date();
+      end.setHours(16,0,0,0);
+      const diff = end - now;
+      const target = document.getElementById("remaining");
+
+      if(diff <= 0){
+        target.textContent = "점검이 종료되었습니다.";
+        target.style.color = "#ff7070";
+        return;
+      }
+      const h = Math.floor(diff/3600000);
+      const m = Math.floor((diff%3600000)/60000);
+      const s = Math.floor((diff%60000)/1000);
+      target.textContent = `남은 시간: ${h}시간 ${m}분 ${s}초`;
+    }
+    updateRemainingTime();
+    setInterval(updateRemainingTime,1000);
+  </script>
+</body>
+</html>
